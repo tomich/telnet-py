@@ -1,0 +1,27 @@
+import telnetlib
+
+sess=telnetlib.Telnet('10.0.0.2',23,2800)
+print 'Conectando...\n'
+try:
+    sess.read_until('Login: ',5)
+    print 'validando usuario...\n'
+    sess.write('admin\n')
+    print 'validando password...\n'
+    sess.read_until('Password: ',5)
+    sess.write('admin\n')
+    print 'esperando bash...\n'
+    sess.read_until('>',5)
+    print 'reiniciando ADSL...\n'
+    sess.write('adsl start\n')
+#    sess.read_until('>',5)
+#    sess.write('adsl start\n')
+    print 'Desconectando...\n'
+    sess.read_until('>',5)
+    sess.write('logout\n')
+                
+except EOFError, socket.error:
+    print time.strftime("%H:%M:%S  "),
+    print 'Falla de Conexion con 10.0.0.2'
+    #return None
+#return sess
+                        
